@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Loading from "../layout/Loading";
+import Repos from "../repos/Repos";
 import { Link } from "react-router-dom";
 export default class User extends Component {
   componentDidMount() {
     this.props.getUser(this.props.match.params.login);
+    this.props.getUsersRepos(this.props.match.params.login);
   }
   render() {
     const {
@@ -21,6 +23,7 @@ export default class User extends Component {
       following
     } = this.props.user;
     const loading = this.props.loading;
+    const repos = this.props.repos;
     if (loading) {
       return <Loading />;
     }
@@ -93,6 +96,7 @@ export default class User extends Component {
               </div>
             </div>
           </div>
+          <Repos repos={repos} />
         </div>
       </div>
     );

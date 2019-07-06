@@ -1,8 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import Loading from "../layout/Loading";
 import Repos from "../repos/Repos";
 import { Link } from "react-router-dom";
-const User = ({ user, loading, getUser, getUsersRepos, repos, match }) => {
+import GithubContext from '../../context/github/githubContext'
+
+const User = ({ match }) => {
+  const githubContext = useContext(GithubContext)
+  const getUser = githubContext.getUser;
+  const getUsersRepos = githubContext.getUsersRepos;
   useEffect(()=> {
     getUser(match.params.login);
     getUsersRepos(match.params.login);
@@ -23,8 +28,9 @@ const User = ({ user, loading, getUser, getUsersRepos, repos, match }) => {
     public_gists,
     public_repos,
     following
-  } = user;
-
+  } = githubContext.user;
+  const repos = githubContext.repos;
+  const loading = githubContext.loading
   if (loading) {
     return <Loading />;
   }
@@ -91,7 +97,7 @@ const User = ({ user, loading, getUser, getUsersRepos, repos, match }) => {
             </div>
           </div>
         </div>
-        <Repos repos={repos} />
+        <Repos repos={repos}/>
       </div>
     </div>
   );

@@ -1,13 +1,17 @@
-import React from "react";
+import React, {useContext} from "react";
 import UserItem from "./UserItem";
 import Loading from "../layout/Loading";
-import PropTypes from "prop-types";
+import GithubContext from '../../context/github/githubContext'
 
-const Users = ({ loading, users }) => {
+const Users = () => {
+  const githubContext = useContext(GithubContext);
+
+  const {users, loading} = githubContext
   if (loading) {
     return <Loading />;
   }
   return (
+
     <div className="section">
       <div className="container">
         <div className="columns is-multiline">
@@ -22,8 +26,4 @@ const Users = ({ loading, users }) => {
   );
 };
 
-Users.propTypes = {
-  users: PropTypes.array.isRequired,
-  loading: PropTypes.bool
-};
 export default Users;
